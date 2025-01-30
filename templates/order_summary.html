@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="order-summary-container">
+        <div class="order-summary-box">
+            <h2>Order Summary</h2>
+
+            <p><strong>Name:</strong> {{ order_summary.name }}</p>
+            <p><strong>Email:</strong> {{ order_summary.email }}</p>
+            <p><strong>Phone:</strong> {{ order_summary.phone }}</p>
+            <p><strong>Address:</strong> {{ order_summary.address }}</p>
+            <p><strong>Payment Mode:</strong> {{ order_summary.payment_mode }}</p>
+
+            {% if order_summary.payment_mode == 'UPI' %}
+                <h4>UPI Payment Details:</h4>
+                <p>UPI ID: booktohunt@ybl</p>
+                <p>Scan the QR Code to make payment:</p>
+                <img id="upi-qrcode" src="{{ url_for('static', filename='qrcode.png') }}" alt="UPI QR Code" width="200">
+                <script>
+                    setTimeout(function() {
+                        window.location.href = "{{ url_for('index') }}"; 
+                    }, 15000);
+                </script>
+            {% elif order_summary.payment_mode == 'COD' %}
+                <p>Your order is confirmed now..it will be delivered very soon to you.....</p>
+                <p>You selected Cash on Delivery. Please make payment when the books are delivered.</p>
+                <p><strong>Delivery Charges:</strong> ₹100</p>
+            {% endif %}
+
+            <h3>Total Price: ₹{{ order_summary.total_price }}</h3>
+            <p><strong>Estimated Delivery Date:</strong> {{ delivery_date }}</p>
+
+            <a href="{{ url_for('index') }}" class="btn">Go to Home</a>
+        </div>
+    </div>
+{% endblock %}

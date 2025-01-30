@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proceed to Payment</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-top: 40px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-top: 40px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            color: #333;
+        }
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 18px;
+            font-weight: 600;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #upi_id_div {
+            display: none;
+        }
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .form-footer a {
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 30px;
+            }
+            button {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Proceed to Payment</h1>
+    <div class="container">
+        <form action="{{ url_for('process_payment') }}" method="POST">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Shipping Address:</label>
+                <textarea id="address" name="address" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="payment_mode">Payment Mode:</label>
+                <select id="payment_mode" name="payment_mode">
+                    <option value="UPI">UPI</option>
+                    <option value="COD">Cash on Delivery</option>
+                </select>
+            </div>
+
+            <div id="upi_id_div" class="form-group">
+                <label for="upi_id">Enter UPI ID (only if UPI is selected):</label>
+                <input type="text" id="upi_id" name="upi_id" placeholder="example@upi">
+            </div>
+
+            <button type="submit">Pay Now</button>
+        </form>
+
+        <div class="form-footer">
+            <p>By clicking "Pay Now", you agree to our <a href="#">Terms and Conditions</a>.</p>
+        </div>
+    </div>
+
+    <script>
+        const paymentModeSelect = document.getElementById('payment_mode');
+        const upiIdDiv = document.getElementById('upi_id_div');
+
+        upiIdDiv.style.display = 'none';
+
+        paymentModeSelect.addEventListener('change', function() {
+            if (paymentModeSelect.value === 'UPI') {
+                upiIdDiv.style.display = 'block';
+            } else {
+                upiIdDiv.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>

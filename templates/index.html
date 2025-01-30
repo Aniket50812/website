@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section id="categories">
+        <h2>Categories</h2>
+        <ul>
+            {% for category in categories %}
+                <li><a href="{{ url_for('category', category_name=category) }}">{{ category }}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="books">
+        <h2>Books</h2>
+        <div class="book-list">
+            {% for book in books %}
+                <div class="book-card">
+                    <h3>{{ book.title }}</h3>
+                    <p><strong>Author:</strong> {{ book.author }}</p>
+                    <p><strong>Price:</strong> ₹{{ book.price }}</p>
+                    <p><strong>Availability:</strong> {{ book.availability }}</p>
+                    <form action="{{ url_for('add_to_cart', book_id=book.id) }}" method="POST">
+                        <button type="submit" class="btn">Add to Cart</button>
+                    </form>
+                </div>
+            {% else %}
+                <p>No books available at the moment.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

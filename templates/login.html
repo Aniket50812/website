@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    <style>
+        /* General page setup */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6D9DC5, #1D1D2A);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            position: absolute;
+            top: 20px;
+            font-size: 48px;
+            font-weight: 600;
+            z-index: 100;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        .form-container h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Form labels and inputs */
+        .form-container label {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            margin-bottom: 15px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-container input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Buttons */
+        .form-container button {
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        /* Toggle between forms */
+        .form-toggle {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .form-toggle a {
+            color: #007bff;
+            font-size: 16px;
+            text-decoration: none;
+            transition: text-decoration 0.3s ease;
+        }
+
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        .hidden {
+            display: none;
+        }
+
+        /* Cloud banner */
+        .offer-banner {
+            position: absolute;
+            background-color: #ff5722;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 25px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 250px;
+            height: 100px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .offer-text {
+            font-weight: bold;
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Color variations for each cloud */
+        .offer-banner:nth-of-type(1) {
+            top: 20px;
+            right: 20px;
+            background-color: #ff5722;
+        }
+
+        .offer-banner:nth-of-type(2) {
+            top: 140px;
+            right: 20px;
+            background-color: #4caf50;
+        }
+
+        .offer-banner:nth-of-type(3) {
+            top: 20px;
+            left: 20px;
+            background-color: #2196f3;
+        }
+
+        .offer-banner:nth-of-type(4) {
+            top: 140px;
+            left: 20px;
+            background-color: #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Book to Hunt</h1>
+    </header>
+    <main>
+        <div class="form-container">
+            <!-- Login Form -->
+            <div id="login-form">
+                <h2>Login</h2>
+                <form method="POST" action="{{ url_for('login') }}">
+                    <label for="login-username">Username:</label>
+                    <input type="text" id="login-username" name="username" required>
+                    <label for="login-password">Password:</label>
+                    <input type="password" id="login-password" name="password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <div class="form-toggle">
+                    <a href="#" id="show-register">Don't have an account? Register</a>
+                </div>
+            </div>
+            
+            <!-- Registration Form -->
+            <div id="register-form" class="hidden">
+                <h2>Register</h2>
+                <form method="POST" action="{{ url_for('register') }}">
+                    <label for="register-username">Username:</label>
+                    <input type="text" id="register-username" name="username" required>
+                    <label for="register-password">Password:</label>
+                    <input type="password" id="register-password" name="password" required>
+                    <button type="submit">Register</button>
+                </form>
+                <div class="form-toggle">
+                    <a href="#" id="show-login">Already have an account? Login</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="offer-banner">
+        <span class="offer-text">Limited Time Offer!</span>
+    </div>
+    <div class="offer-banner" style="animation-duration: 3s;">
+        <span class="offer-text">Exclusive Deals Await!</span>
+    </div>
+    <div class="offer-banner">
+        <span class="offer-text">Special Membership Perks</span>
+    </div>
+    <div class="offer-banner" style="animation-duration: 2.5s;">
+        <span class="offer-text">Join Now and Save</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const showRegister = document.getElementById('show-register');
+            const showLogin = document.getElementById('show-login');
+
+            showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+            });
+
+            showLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                registerForm.classList.add('hidden');
+                loginForm.classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
